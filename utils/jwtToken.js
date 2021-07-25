@@ -5,13 +5,12 @@ function SignToken(params) {
     return  token
 }
 function VerifyToken(req,res,next){
-    console.log('req: ', req.headers);
-    console.log('req: ', req.body);
-
+  
       try {
-        const token = req.headers.x-access-token;
+        const token = req.headers["x-access-token"];
         const decodedToken = jwt.verify(token, process.env.secret);
         const userid = decodedToken.id;
+        console.log('userid: ', decodedToken);
         if (req.body.userid && req.body.userid !== userid) {
             res.status(401).json({
               message:'UnAuthorize User'

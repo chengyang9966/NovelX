@@ -100,6 +100,11 @@ app.get('/',auth,checkStatus);
   app.post('/api/registerUser',register.registerUser);
 //   Authorize 
 app.get("/dashboard",auth,dashboard);
+app.post("/api/auth",auth,(req,res)=>{
+  res.status(201).json({
+    message:'user Authorize'
+  })
+});
 // Roles
 app.get("/api/getRoles",GetRoles);
 process.once('SIGUSR2', function () {
