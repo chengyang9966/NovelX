@@ -1,18 +1,16 @@
 import Title  from "./Title";
 import React,{useState} from "react";
-import axios from "axios"
+import axios from "axios";
 import { useHistory } from "react-router";
 import Checker from "../utils/Checker";
 import Loading from "./Loading";
 import PopUp from "./PopUp";
-const Login=()=>{
+const ForgetPassword=()=>{
 const [data,setData]=useState({
     email:'',
-    password:''
 })
 let ErrorData={
     EmailText:'',
-    PasswordText:'',
     Error:false
 }
 let ErrorUser={
@@ -28,24 +26,25 @@ const history=useHistory()
 const onSubmit=(e)=>{
     setLoading(true);
     e.preventDefault();
+    console.log('data: ', data);
     if(Checker(data).Error===true){
-        setLoading(false);
         SetError(Checker(data))
-
+        setLoading(false);
         setTimeout(()=>{
             SetError(ErrorData)
         },3000)
     }else{
-        axios.post('/api/login',
+        axios.post('/api/forgetpassword',
         data
         ).then(res=>{
             setLoading(false);
             console.log('res: ', res);
             if(res.status===200){
-                localStorage.setItem('user',JSON.stringify(
-                   res.data
-                ))
-                history.push('/home')
+                setAlert({
+                    Message:res.data.message,
+                    Title:'Recovery Password Sent',
+                    Error:true
+                })
             }else{
                 setAlert({
                     Message:res.data.message,
@@ -87,21 +86,11 @@ const onChange=(name,value)=>{
   <div className="mb-3 px-4 text-danger " >
       <div>{error.EmailText}</div>
   </div>
-  <div className="mb-3 px-4">
-    <label for="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" name="password" value={data.password} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
-  </div>
-  <div className="mb-3 px-4 text-danger " >
-      <div>{error.PasswordText}</div>
+  <div className="my-5 px-4 d-grid">
+  <button type="submit" className="btn btn-danger rounded-pill">Send Recovery Password</button>
   </div>
   <div className="my-5 px-4 d-grid">
-  <button type="submit"  disabled={error.Error} className="btn btn-primary rounded-pill">Login In</button>
-  </div>
-  <div className="my-5 px-4 d-grid">
-  <button type="submit" onClick={()=> history.push('/forgetPassword')} disabled={error.Error} className="btn btn-danger rounded-pill">Forget Password</button>
-  </div>
-  <div className="my-5 px-4 d-grid">
-  <button type="submit" onClick={()=> history.push('/register')} disabled={error.Error} className="btn btn-danger rounded-pill">Register</button>
+  <button type="submit" onClick={()=> history.push('/login')} className="btn btn-primary rounded-pill">Return Login</button>
   </div>
 </form>
         </div>
@@ -115,4 +104,4 @@ const onChange=(name,value)=>{
     </>
     )
 }
-export default Login
+export default ForgetPassword

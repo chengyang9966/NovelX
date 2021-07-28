@@ -15,10 +15,11 @@ const home=require('./routes/home');
 const dashboard=require('./routes/dashboard');
 const login=require('./routes/login');
 const checkStatus=require('./utils/checkStatus');
-const register = require('./routes/register');
+const Register = require('./routes/register').Register;
+const ForgetPassword=require('./routes/forgetPassword').ForgetPassword
 const GetRoles=require('./routes/roles').GetRoles;
 const auth=require('./utils/jwtToken').Auth;
-const SignToken=require('./utils/jwtToken').SignToken;
+
 if(process.env.NODE_ENV !=='Production'){
     
     require('dotenv').config();
@@ -69,6 +70,9 @@ db().then(
   })
 );
 
+// SendMail({
+
+// });
 // CreateTable(`CREATE TABLE IF NOT EXISTS roles (
 //   id serial PRIMARY KEY,
 //   name character varying(255) NOT NULL UNIQUE,
@@ -95,9 +99,9 @@ app.get('/',auth,checkStatus);
   app.get("/login",home);
   app.post('/api/login',login);
 //   Register
-  app.get("/register",register.registerPage);
-  app.post('/register',register.register);
-  app.post('/api/registerUser',register.registerUser);
+new Register(app);
+let forgetPassword=new ForgetPassword(app);
+
 //   Authorize 
 app.get("/dashboard",auth,dashboard);
 app.post("/api/auth",auth,(req,res)=>{

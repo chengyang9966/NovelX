@@ -23,7 +23,12 @@ module.exports=async(req,res,next)=>{
             }
           })
             
+    }else{
+      res.status(400).json({
+        message:'User Not Found'
+      })
     }
+
   })
 
    

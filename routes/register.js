@@ -3,12 +3,8 @@ const HashPassword=require('../utils/password').HashPassword
 const Query=require('../db').query;
 const UserModel=require('../models/User')
 
-module.exports={register:(req,res,next)=>{
-    res.status(200).redirect('/register')
-},
-registerPage:(req,res,next)=>{  res.render('pages/register')},
-
-registerUser:(req,res,next)=>{ 
+const Register=function(app){
+  app.post('/api/registerUser',(req,res,next)=>{ 
     let temp=[req.body];
     console.log('temp: ', temp);
 
@@ -35,5 +31,27 @@ registerUser:(req,res,next)=>{
           
         }
       })
+ });
+
+
 }
-}
+
+exports.Register = Register;
+
+
+
+
+
+
+
+
+
+
+
+// module.exports={register:(req,res,next)=>{
+//     res.status(200).redirect('/register')
+// },
+// registerPage:(req,res,next)=>{  res.render('pages/register')},
+
+// registerUser:
+// }

@@ -1,18 +1,21 @@
 import Title  from "./Title";
 import React,{useState} from "react";
 import axios from "axios"
-import { useHistory } from "react-router";
+import { useHistory,useLocation } from "react-router";
 import Checker from "../utils/Checker";
 import Loading from "./Loading";
 import PopUp from "./PopUp";
-const Login=()=>{
+import EyesIcon from "./Eye";
+const ResetPassword=()=>{
 const [data,setData]=useState({
     email:'',
-    password:''
+    password:'',
+    password2:'',
 })
 let ErrorData={
     EmailText:'',
     PasswordText:'',
+    Password2Text:'',
     Error:false
 }
 let ErrorUser={
@@ -22,10 +25,21 @@ let ErrorUser={
 }
 const [alert,setAlert]=useState(ErrorUser)
 const [loading,setLoading]=useState(false)
+const [view,setView]=useState(false)
+const [view2,setView2]=useState(false)
 const [error,SetError]=useState(ErrorData)
 const history=useHistory()
-   
-const onSubmit=(e)=>{
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  let query = useQuery();
+console.log(query.get("token"))
+  const onSubmit=(e)=>{
+let config={headers:{
+    "x-access-token":query.get("token")
+}}
+
     setLoading(true);
     e.preventDefault();
     if(Checker(data).Error===true){
@@ -36,8 +50,9 @@ const onSubmit=(e)=>{
             SetError(ErrorData)
         },3000)
     }else{
-        axios.post('/api/login',
-        data
+        axios.post('/api/resetpassword',
+        Object.assign(data,{userid:Number(query.get("id"))}) ,
+        config
         ).then(res=>{
             setLoading(false);
             console.log('res: ', res);
@@ -49,16 +64,17 @@ const onSubmit=(e)=>{
             }else{
                 setAlert({
                     Message:res.data.message,
-                    Title:'Not User',
+                    Title:'Change Password Failed',
                     Error:true
                 })
                 console.error(res.data)
             }
         }).catch(err=>{
+            console.log('err: ', err.message);
             setLoading(false);
             setAlert({
-                Message:'User Not Found',
-                Title:'Not User',
+                Message:err.status,
+                Title:'Change Password Failed',
                 Error:true
             })
 
@@ -87,21 +103,24 @@ const onChange=(name,value)=>{
   <div className="mb-3 px-4 text-danger " >
       <div>{error.EmailText}</div>
   </div>
-  <div className="mb-3 px-4">
-    <label for="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" name="password" value={data.password} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
+    <label for="exampleInputPassword1" className="mb-3 px-4 form-label">Password</label>
+  <div className="mb-3 px-4 d-flex align-items-center">
+    <input type={view?"text":"password"} name="password" value={data.password} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
+  {EyesIcon(view,()=>setView(!view))}
   </div>
   <div className="mb-3 px-4 text-danger " >
       <div>{error.PasswordText}</div>
   </div>
-  <div className="my-5 px-4 d-grid">
-  <button type="submit"  disabled={error.Error} className="btn btn-primary rounded-pill">Login In</button>
+    <label for="exampleInputPassword1" className="mb-3 px-4  form-label">Confirm Password</label>
+  <div className="mb-3 px-4 d-flex align-items-center">
+    <input type={view?"text":"password"} name="password2" value={data.password2} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
+    {EyesIcon(view2,()=>setView2(!view2))}
+  </div>
+  <div className="mb-3 px-4 text-danger " >
+      <div>{error.Password2Text}</div>
   </div>
   <div className="my-5 px-4 d-grid">
-  <button type="submit" onClick={()=> history.push('/forgetPassword')} disabled={error.Error} className="btn btn-danger rounded-pill">Forget Password</button>
-  </div>
-  <div className="my-5 px-4 d-grid">
-  <button type="submit" onClick={()=> history.push('/register')} disabled={error.Error} className="btn btn-danger rounded-pill">Register</button>
+  <button type="submit" disabled={error.Error} className="btn btn-primary rounded-pill">Reset Passsword</button>
   </div>
 </form>
         </div>
@@ -115,4 +134,4 @@ const onChange=(name,value)=>{
     </>
     )
 }
-export default Login
+export default ResetPassword

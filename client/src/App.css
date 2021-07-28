@@ -19,3 +19,48 @@ body{
 .titleRed{
   color: var(--main-red-color)
 }
+.btn-close{
+  color:white !important
+}
+.closeBtn{
+  position: absolute;
+  left: 67rem;
+  top: 17.5rem;
+  width: 28px;
+  height: 29px;
+  border-radius: 100;
+  background-color:rgba(0,0,0,0.5);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.closeBtnAlert{
+  position: absolute;
+  left: 67rem;
+  top: 21.3rem;
+  width: 28px;
+  height: 29px;
+  border-radius: 100;
+  background-color:rgba(0,0,0,0.5);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.popUp-Bg{
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+}
+.IconView{
+  width: 20px;
+  position: absolute;
+  right: 40px;
+  cursor: pointer;
+}
