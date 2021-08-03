@@ -14,6 +14,7 @@ const UserModel=require('./models/User')
 const home=require('./routes/home');
 const dashboard=require('./routes/dashboard');
 const login=require('./routes/login');
+const Contact=require('./routes/Contacts').Contact;
 const checkStatus=require('./utils/checkStatus');
 const Register = require('./routes/register').Register;
 const ForgetPassword=require('./routes/forgetPassword').ForgetPassword
@@ -101,7 +102,7 @@ app.get('/',auth,checkStatus);
 //   Register
 new Register(app);
 let forgetPassword=new ForgetPassword(app);
-
+ Contact(app);
 //   Authorize 
 app.get("/dashboard",auth,dashboard);
 app.post("/api/auth",auth,(req,res)=>{

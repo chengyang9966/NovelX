@@ -35,6 +35,21 @@ const ForgetPassword=function(app){
 
     })
 
+    app.post('/api/verifyReset',Auth,(req,res)=>{
+        Query('SELECT resetpassword FROM users WHERE id=$1',[req.body.userid]).then(respone=>{
+            console.log('respone: ', respone);
+            if(respone.length>0 && respone[0].resetpassword==true){
+                res.status(200).json({
+                    message:'Link Verified'
+                })
+            }else{
+                res.status(419).json({message:'Link Expired'})
+            }
+        }).catch(err=>
+            res.status(419).json({message:'Link Expired'})
+            )
+    })
+
     app.post('/api/resetpassword',Auth,(req,res)=>{
         let {email,password}=req.body
         Query('SELECT resetpassword FROM users WHERE  email=$1',[email]).then(respone=>{

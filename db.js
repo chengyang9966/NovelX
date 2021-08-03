@@ -1,6 +1,8 @@
 // const mongoose = require("mongoose");
 const {  Client } = require("pg");
-
+const update = require('./utils/update').update
+const insert = require('./utils/update').insert
+const Utils = require('./utils/update').Utils
  async function connection() {
   try {
     const client = new Client({
@@ -47,11 +49,64 @@ async function query(query, params) {
   }
   
 }
+ /**
+   * Updates data
+   *
+   * entity: table name, e.g, users 
+   * conditions: { id: "some-unique-user-id", ... }
+   * fields: list of desired columns to update { username: "Joe", ... }
+   */
+     const updateOne=async(entity, conditions, fields,CheckExists,CheckExistsValue) => {
+       console.log('CheckExists,CheckExistsValue: ', CheckExists,CheckExistsValue);
+    if (!entity) throw new Error("no entity table specified");
+    if (Utils.isObjEmpty(conditions))
+      throw new Error("no conditions specified");
+
+    let resp;   
+    const { text, values } = update(entity, conditions, fields);
+    let InsertText = insert(entity, fields).text;
+    console.log('InsertText: ', InsertText);
+    const client = new Client({
+      host: process.env.HEROKU_POSTGRESQL_HOST,
+      user: process.env.HEROKU_POSTGRESQL_USER,
+      password:process.env.HEROKU_POSTGRESQL_PASSWORD,
+      port: process.env.HEROKU_POSTGRESQL_PORT,
+      database: process.env.HEROKU_POSTGRESQL_DATABASE,
+      ssl: { rejectUnauthorized: false },
+    });
+   await client.connect();
+    try {
+      if(CheckExists&& CheckExistsValue){
+        let temp= await client.query(CheckExists, CheckExistsValue);
+        console.log('temp: ', temp);
+  
+      if(temp.rowCount>0){
+        rs = await client.query(text, values);
+        resp = rs.rows[0];
+      }else{
+        rs = await client.query(InsertText);
+      resp = rs.rows[0];
+      }
+      }
+    rs = await client.query(text, values);
+    resp = rs.rows[0];
+    client.end()
+    } catch (err) {
+      console.error(err);
+      client.end();
+      throw err;
+    }
+
+    return resp;
+  }
+
+
 module.exports ={
   connection,
   query,
   CreateTable,
-  CloseNetwork
+  CloseNetwork,
+  updateOne
 }
 async function CreateTable(text,param) {
   const client = new Client({
