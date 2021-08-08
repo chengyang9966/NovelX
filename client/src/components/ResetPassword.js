@@ -1,5 +1,5 @@
 import Title  from "./Title";
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import axios from "axios"
 import { useHistory,useLocation } from "react-router";
 import Checker from "../utils/Checker";
@@ -29,16 +29,33 @@ const [view,setView]=useState(false)
 const [view2,setView2]=useState(false)
 const [error,SetError]=useState(ErrorData)
 const history=useHistory()
-
 function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
   let query = useQuery();
-console.log(query.get("token"))
-  const onSubmit=(e)=>{
 let config={headers:{
     "x-access-token":query.get("token")
 }}
+
+    useEffect(()=>{
+        axios.post('/api/verifyReset',
+        {userid:Number(query.get("id"))}
+        ,config).then(res=>{
+            console.log('res: ', res);
+            res.status!==200&&history.push('/Nofound')
+            
+        }).catch(err=>{
+            history.push('/expired')
+        })
+    },[])
+
+
+
+
+
+console.log(query.get("token"))
+  const onSubmit=(e)=>{
+
 
     setLoading(true);
     e.preventDefault();
@@ -110,7 +127,7 @@ const onChange=(name,value)=>{
   </div>
   <div className="mb-3 px-4 text-danger " >
       <div>{error.PasswordText}</div>
-  </div>
+  </div> 
     <label for="exampleInputPassword1" className="mb-3 px-4  form-label">Confirm Password</label>
   <div className="mb-3 px-4 d-flex align-items-center">
     <input type={view?"text":"password"} name="password2" value={data.password2} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>

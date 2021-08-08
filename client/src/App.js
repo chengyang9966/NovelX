@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
+import './calander.css'
 import Login from './components/login';
 import ForgetPassword from './components/ForgetPassword';
+import Expired from './components/expired';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,7 +22,8 @@ function App() {
         <Route path='/login' exact component={Login} />
         <Route path='/register' exact component={Register} />
         <Route path='/forgetPassword' exact component={ForgetPassword} />
-        <Route path='/passwordReset' component={ResetPassword} />
+        <Route path='/passwordReset' exact component={ResetPassword} />
+        <Route path='/expired' exact component={Expired} />
         <PrivateRoute/>
       </Switch>
 

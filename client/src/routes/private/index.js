@@ -6,18 +6,23 @@ import {
 import CheckAuth from "../../utils/authChecker";
 import Loading from "../../components/Loading";
 import NotFound from '../../components/NotFound';
-import homePage from "./homepage";
+import HomePage from "./homepage";
+import Profile from "./Profile";
+import MapPage from "./MapPage";
 import React,{useState,useEffect} from "react";
-const PrivateRouteMain=()=>{
+const PrivateRouteMain=()=>{    
     const [status,SetStatus]=useState(false)
     const [data,SetData]=useState(false)
 useEffect(() => {
     !status&&
     CheckAuth().then(res=>
         {  console.log('res: ', res);
-          SetData(res)
+          SetData(res);
           SetStatus(true)
-      }).then(err=>console.error(err))
+      }).then(err=>{
+          console.error(err);
+      SetStatus(true)}
+      );
 }, [status])
  
         
@@ -29,7 +34,9 @@ useEffect(() => {
             <PrivateRoute auth={data}>
             <Switch>
            <Route path="/123" exact component={Title}/>
-           <Route path="/home" exact component={homePage}/>
+           <Route path="/" exact component={HomePage}/>
+           <Route path="/Profile" exact component={Profile}/>
+           <Route path="/Map" exact component={MapPage}/>
             <NotFound/>
             </Switch>
         </PrivateRoute>

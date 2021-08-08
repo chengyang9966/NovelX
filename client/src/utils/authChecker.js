@@ -1,5 +1,5 @@
 import axios from 'axios'
-import CreateToken from './createToken'
+import {CreateToken} from './createToken'
 const  CheckAuth=async()=>{
    
 
@@ -18,7 +18,7 @@ const  CheckAuth=async()=>{
                 },axiosConfig
                 ).then(res=>{
                     console.log('res1231: ', res);
-                    if(res.status==201){
+                    if(res.status===201){
                         temp= true 
                     }
                 })

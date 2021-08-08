@@ -132,9 +132,9 @@ const onChange=(name,value)=>{
   <div className="mb-3 px-4 text-danger " >
       <div>{error.PasswordText}</div>
   </div>
-  <div class=" mb-3 px-4">
+  <div className=" mb-3 px-4">
   <label for="exampleInputPassword1" className="form-label">Roles</label>
-  <select class="rounded-pill form-control" id="inputGroupSelect01">
+  <select className="rounded-pill form-control" id="inputGroupSelect01">
       {
           roles.length>0&&roles.map(w=>{
               return(

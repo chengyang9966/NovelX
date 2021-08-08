@@ -1,6 +1,6 @@
 
 const Checker=(props)=>{
-const {email,fname,lname,password,password2,roleid}=props
+const {email,fname,lname,password,password2,roleid,phonenumber}=props
 let error={}
 if(email){
     const reg=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -34,6 +34,12 @@ if(password!==undefined){
 if(password2!==undefined){
     if(password!==password2){
         error.Password2Text='Please provide same Password';
+        error.Error=true;
+    }
+}
+if(phonenumber!==undefined){
+    if(phonenumber.length<10){
+        error.PhoneText='Please provide the correct number';
         error.Error=true;
     }
 }

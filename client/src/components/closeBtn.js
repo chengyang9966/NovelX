@@ -1,8 +1,8 @@
 
 
-const closeBtn=()=>{
+const closeBtn=({onClick})=>{
     return(
-        <div style={{color:'white',cursor:'pointer'}}>X</div>
+        <div onClick={onClick} style={{color:'white',cursor:'pointer'}}>X</div>
     )
 }
 

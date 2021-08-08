@@ -9,14 +9,15 @@ return (
     <div className="popUp-Bg">
         <div style={{width:'100vw',height:'100vh'}} className=" d-flex align-items-center justify-content-center">
     <div style={{width:'400px',borderRadius:10}} className="card text-center " >
+    <div className="closeBtn" >
+         <CloseBtn onClick={close}/>
+</div>
   <div style={{minHeight:'200px'}} className="card-body px-4">
     <p className="card-title ">{title}</p>
     <p className="card-text">{description}</p>
   </div>
 </div>
-<div className="closeBtnAlert" onClick={close}>
-         <CloseBtn/>
-</div>
+
     </div>
     </div>
 

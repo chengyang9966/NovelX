@@ -8,4 +8,16 @@ const CreateToken=()=>{
         return ''
     }
 }
-export default CreateToken
+
+const CreateHeader=()=>{
+    let config={
+        headers:{
+            'Content-Type': 'application/json',
+            "x-access-token":CreateToken()
+            
+        }
+    }
+
+    return config
+}
+export  {CreateToken,CreateHeader}

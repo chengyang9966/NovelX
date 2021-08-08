@@ -45,7 +45,7 @@ const onSubmit=(e)=>{
                 localStorage.setItem('user',JSON.stringify(
                    res.data
                 ))
-                history.push('/home')
+                history.push('/')
             }else{
                 setAlert({
                     Message:res.data.message,
