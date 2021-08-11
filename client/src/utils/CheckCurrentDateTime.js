@@ -2,7 +2,7 @@ import moment from 'moment';
 
 const CurrentDateTimeInString=()=>{
     let current =new Date();
-    current= moment(current).format('hh')
+    current= moment(current).format('HH')
     let temp= Number(current.slice(0,2))
     if(temp<12){
         return 'Good Morning'

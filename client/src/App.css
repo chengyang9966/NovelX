@@ -121,9 +121,13 @@ z-index: 1;
 }
 .dropdown-menu{
   display: block;
-  right: 0px;
-  top: 53px;
+  right: 48px;
+    top: 111px;
   border-radius: 10px;
+}
+.descTextColor{
+  color: #d3d3d3;
+  font-size: 16px;
 }
 .dropdown-menu-hide{
   display: none;

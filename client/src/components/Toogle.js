@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Toogle=({checked,onChange})=>{
-    console.log('checked: ', checked);
     return(
         <>
       <div className="d-flex TitleContainer">

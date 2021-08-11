@@ -8,6 +8,7 @@ import Loading from "../../components/Loading";
 import PopUp from "../../components/PopUp";
 import {CreateHeader} from '../../utils/createToken';
 import Card from '../../components/Card';
+import MasterPageLayout from "../../components/masterPage";
 import CountryList,{StateList} from "../../Types/CountryList";
 import DropdownList from "../../components/DropdownOption";
 import 'react-calendar/dist/Calendar.css';
@@ -19,6 +20,7 @@ const ProfilePage=()=>{
         email:'',
         password:'',
         fname:'',
+        username:'',
         lname:'',
         rolename:'',
         phonenumber:'',
@@ -73,6 +75,7 @@ const ProfilePage=()=>{
                 setData({
                   ...data,
                     email:ContactData.email,
+                    username:ContactData.username,
                     fname:ContactData.fname,
                     lname:ContactData.lname,
                     rolename:ContactData.rolename,
@@ -132,7 +135,7 @@ const ProfilePage=()=>{
     }
     return(
         <>
-        <Navbar/>
+  <MasterPageLayout email={data.email} name={data.username}>
         <div >
             {loading&&<Loading/>}
         <div className="display-4 text-center my-5">Personal Profile  </div>
@@ -233,6 +236,7 @@ const ProfilePage=()=>{
 
 </form>
         </div>
+        </MasterPageLayout>
 {/* <Card title="Hii" description="HEY"  buttonText="dasd" /> */}
 {alert.Error&&
 <PopUp type="ALERT"  title={alert.Title} description={alert.Message} close={()=>setAlert({
@@ -243,6 +247,7 @@ const ProfilePage=()=>{
 {openCard&&
 <Card title={cardTextForTitle.title} setClose={CardText.setClose} description={cardTextForTitle.description}/>
 }
+
         </>
         
     )

@@ -12,6 +12,7 @@ const HomePage = () => {
   let userid = JSON.parse(localStorage.getItem("user")).UserId;
   let config = CreateHeader();
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setloading] = useState(true);
   const [cardOpen, setcardOpen] = useState(false);
   const [CardDetails, setCardDetails] = useState(CardBtn);
@@ -22,6 +23,7 @@ const HomePage = () => {
       let ContactData = res.data[0];
       if (res.status === 200) {
         setUserName(ContactData.username);
+        setEmail(ContactData.email);
         setloading(false);
         setTime(CurrentDateTimeInString());
       } else {
@@ -53,7 +55,7 @@ const HomePage = () => {
       {loading ? (
         <Loading />
       ) : (
-        <MasterPageLayout>
+        <MasterPageLayout name={userName} email={email} >
           <div className="bodyWrapper">
               <div className="TitleContainer d-flex align-items-center justify-content-between">
             <h1 className="titleText">
