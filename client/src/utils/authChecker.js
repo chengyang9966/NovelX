@@ -15,7 +15,6 @@ const  CheckAuth=async()=>{
                     userid:user.UserId
                 },axiosConfig
                 ).then(res=>{
-                    console.log('res1231: ', res);
                     if(res.status===201){
                         temp= true 
                     }

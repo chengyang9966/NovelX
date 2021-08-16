@@ -7,7 +7,8 @@ import SmallCard from "../../components/SmallCard";
 import Card from "../../components/Card";
 import CardBtn from "../../Types/CardBtnList";
 import { CurrentDateTimeInString } from "../../utils/CheckCurrentDateTime";
-import moment from "moment";
+import MyApp from '../../components/PDFView'
+import Datetime from '../../utils/timeDate'
 const HomePage = () => {
   let userid = JSON.parse(localStorage.getItem("user")).UserId;
   let config = CreateHeader();
@@ -17,7 +18,7 @@ const HomePage = () => {
   const [cardOpen, setcardOpen] = useState(false);
   const [CardDetails, setCardDetails] = useState(CardBtn);
   const [time, setTime] = useState("");
-  const [Datetime, setDatetime] = useState(new Date());
+
   useEffect(() => {
     axios.get(`/api/getusercontact/${userid}`, config).then((res) => {
       let ContactData = res.data[0];
@@ -35,15 +36,7 @@ const HomePage = () => {
         setClose:()=>setcardOpen(false)
     })
   },[]);
-  useEffect(()=>{
-    const timer = setInterval(() => { // Creates an interval which will update the current data every minute
-        // This will trigger a rerender every component that uses the useDate hook.
-        setDatetime(new Date());
-      }, 60 * 1000);
-      return () => {
-        clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
-      }
-  },[])
+
 
   let displayArray = [
     { title: "Testing", icon: "Clock", desc: "3H" },
@@ -61,7 +54,7 @@ const HomePage = () => {
             <h1 className="titleText">
               {time}, {userName}
             </h1>
-            <h3>{moment(Datetime).format('HH:mm')}</h3>
+            <h3>{Datetime}</h3>
               </div>
             <div className="d-flex Spacing">
             <div className="formInput50">
@@ -80,7 +73,7 @@ const HomePage = () => {
             <SmallCard displayArray={displayArray} />
             </div>
             </div>
-            
+            <MyApp/>
           </div>
           {cardOpen&&<Card title={CardDetails.title} description={CardDetails.description} setClose={CardDetails.setClose}  />}
         </MasterPageLayout>

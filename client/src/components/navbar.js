@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Dropdown from "./dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome,faUser,faUserFriends,faSignOutAlt,faMapMarked } from "@fortawesome/free-solid-svg-icons";
@@ -114,6 +114,7 @@ const SideMenuBottomItem = [
   },
 ];
 
+
 const SideMenu = () => {
   const history=useHistory()
   let location = useLocation();
@@ -121,6 +122,10 @@ const SideMenu = () => {
     localStorage.removeItem('user')
     history.push('/login')
 }
+const [temp,setTemp] =useState(location.pathname)
+useEffect(() => {
+  setTemp(location.pathname)
+}, [location.pathname])
   console.log("location: ", location.pathname);
   return (
     <nav
@@ -134,11 +139,12 @@ const SideMenu = () => {
             {<img src="/NovelX.png" width="30rem" height="30rem" />}
           </a>
         </div>
-        {SideMenuItem.map((w) => {
+        {SideMenuItem.map((w,i) => {
           return (
             <a
+            key={w.text+i}
               className={`nav-link ${
-                location.pathname === w.href ? "active" : null
+                temp=== w.href ? "active" : null
               }`}
               aria-current="page"
               href={w.href}
@@ -152,8 +158,9 @@ const SideMenu = () => {
       {SideMenuBottomItem.map((w,i) => {
           return (
             <a
+            key={w.text+i}
               className={`nav-link ${
-                location.pathname === w.href ? "active" : null
+                temp === w.href ? "active" : null
               } ${i===SideMenuBottomItem.length-1&&'logout-btn'}` }
               aria-current="page"
               href={w.href}

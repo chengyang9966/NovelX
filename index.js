@@ -1,5 +1,7 @@
+require('dotenv').config({ 
+  silent:process.env.NODE_ENV ==='Production'
+  ,path:__dirname+ '/.env' });
 const express=require('express');
-const dotenv = require('dotenv');
 // const livereload = require("livereload");
 const path = require("path");
 // const connectLivereload = require("connect-livereload");
@@ -17,14 +19,17 @@ const login=require('./routes/login');
 const Contact=require('./routes/Contacts').Contact;
 const checkStatus=require('./utils/checkStatus');
 const Register = require('./routes/register').Register;
+const upload=require('./config/multerConfig');
+const WebPush=require('./controller/WebPushController').Webpush;
 const ForgetPassword=require('./routes/forgetPassword').ForgetPassword
 const GetRoles=require('./routes/roles').GetRoles;
 const auth=require('./utils/jwtToken').Auth;
+const fileWorker = require('./controller/UploadController');
 
-if(process.env.NODE_ENV !=='Production'){
-    
-    require('dotenv').config();
-}
+
+
+
+
 let gracefulShutdown;
 // For nodemon restarts
 gracefulShutdown = function (msg, callback) {
@@ -104,6 +109,8 @@ new Register(app);
 let forgetPassword=new ForgetPassword(app);
  Contact(app);
 //   Authorize 
+new WebPush(app);
+
 app.get("/dashboard",auth,dashboard);
 app.post("/api/auth",auth,(req,res)=>{
   res.status(201).json({
@@ -112,6 +119,8 @@ app.post("/api/auth",auth,(req,res)=>{
 });
 // Roles
 app.get("/api/getRoles",GetRoles);
+app.post('/api/file/upload',auth, upload.single("file"), fileWorker.uploadFile); 
+
 process.once('SIGUSR2', function () {
   console.log('heeghef')
   process.kill(process.pid, 'SIGUSR2');

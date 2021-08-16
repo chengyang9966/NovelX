@@ -9,6 +9,7 @@ import NotFound from '../../components/NotFound';
 import HomePage from "./homepage";
 import Profile from "./Profile";
 import MapPage from "./MapPage";
+import PersonalPage from  './Personal'
 import React,{useState,useEffect} from "react";
 const PrivateRouteMain=()=>{    
     const [status,SetStatus]=useState(false)
@@ -16,7 +17,7 @@ const PrivateRouteMain=()=>{
 useEffect(() => {
     !status&&
     CheckAuth().then(res=>
-        {  console.log('res: ', res);
+        { 
           SetData(res);
           SetStatus(true)
       }).then(err=>{
@@ -37,6 +38,7 @@ useEffect(() => {
            <Route path="/" exact component={HomePage}/>
            <Route path="/Profile" exact component={Profile}/>
            <Route path="/Map" exact component={MapPage}/>
+           <Route path="/personal" exact component={PersonalPage}/>
             <NotFound/>
             </Switch>
         </PrivateRoute>

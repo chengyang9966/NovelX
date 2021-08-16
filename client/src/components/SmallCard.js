@@ -12,7 +12,7 @@ return(
     {
         displayArray.map((w,i)=>{
             return(
-                <div onClick={()=>cardClick(w)} className={`pointer ${i===0&&'border-top-round'} ${i===displayArray.length-1&&'border-bottom-round'} card-body-Layout d-flex justify-content-between align-items-center px-3`} >
+                <div key={w+i} onClick={onClick?()=>cardClick(w):null} className={`${onClick&&'pointer'} ${i===0&&'border-top-round'} ${i===displayArray.length-1&&'border-bottom-round'} card-body-Layout d-flex justify-content-between align-items-center px-3`} >
                   <div  className="iconSm">
                   <FontAwesomeIcon icon={w.icon==='Clock'?faClock:faFolder}/>
                     </div>

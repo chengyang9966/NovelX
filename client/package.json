@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cra-append-sw --skip-compile ./public/custom-sw.js",
     "dev": "PORT=4800 react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
