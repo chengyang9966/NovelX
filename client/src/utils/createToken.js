@@ -19,4 +19,15 @@ const CreateHeader=()=>{
 
     return config
 }
-export  {CreateToken,CreateHeader}
+const CreateImageHeader=()=>{
+    let config={
+        headers:{
+            'Content-Type':'multipart/form-data',
+            "x-access-token":CreateToken()
+            
+        }
+    }
+
+    return config
+}
+export  {CreateToken,CreateHeader,CreateImageHeader}
