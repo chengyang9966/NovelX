@@ -6,7 +6,7 @@ AWS.config.update({
   });
 
   const s3 = new AWS.S3();
-const UploadFile=(buffer, name, type)=>{
+const UploadPublicFile=(buffer, name, type)=>{
 
     const params = {
         ACL: 'public-read',
@@ -18,5 +18,5 @@ const UploadFile=(buffer, name, type)=>{
     return s3.upload(params).promise();
 }
 module.exports={
-    UploadFile
+  UploadPublicFile
 }

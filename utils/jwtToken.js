@@ -11,7 +11,6 @@ function VerifyToken(req,res,next){
         const decodedToken = jwt.verify(token, process.env.secret);
         const userid = decodedToken.id;
         if(typeis(req, 'multipart/form-data')){
-          console.log('req: ', req.params.userid,userid);
           if (!req.params.userid && req.params.userid !== userid) {
              return res.status(405).json({
                 message:'UnAuthorize User'

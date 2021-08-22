@@ -3,7 +3,7 @@ import Card from "../../components/Card";
 import CardBtn from "../../Types/CardBtnList";
 import HeaderText from "../../components/HeaderText";
 import Loading from "../../components/Loading";
-import {CreateImageHeader} from '../../utils/createToken';
+import {CreateImageHeader,CreateHeader} from '../../utils/createToken';
 import axios from "axios"
 const PersonalPage = () => {
   const [cardOpen, setcardOpen] = useState(false);
@@ -11,6 +11,12 @@ const PersonalPage = () => {
   const [Image,setImage]=useState(null)
   const [data,setdata]=useState(null)
   const [loading,setLoading]=useState(false)
+  useEffect(()=>{
+    let user=JSON.parse(localStorage.getItem('user'))
+    axios.get(`api/images/${user.UserId}`,CreateHeader()).then(res=>{
+      setImage(res.data[0].imageurl)
+    })
+  },[])
   let config=CreateImageHeader()
   useEffect(() => {
     setCardDetails({
