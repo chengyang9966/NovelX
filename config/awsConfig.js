@@ -8,7 +8,7 @@ const AWS = require('aws-sdk');
 const BUCKET_NAME='uploadimage6641'
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY1
 });
 const params = {
   Bucket: BUCKET_NAME,
