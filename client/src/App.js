@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
 import './calander.css'
-import Login from './components/login';
-import ForgetPassword from './components/ForgetPassword';
+import LoginPage from './routes/public/LoginPage';
+import RegisterPage from './routes/public/RegisterPage';
+import ForgetPasswordPage from './routes/public/ForgetPasswordPage';
 import Expired from './components/expired';
 import {
   BrowserRouter as Router,
@@ -11,7 +12,6 @@ import {
   Link
 } from "react-router-dom";
 import PrivateRoute from './routes/private'
-import Register from './components/register';
 import ResetPassword from './components/ResetPassword';
 
 function App() {
@@ -19,9 +19,9 @@ function App() {
     <>
     <Router>
       <Switch>
-        <Route path='/login' exact component={Login} />
-        <Route path='/register' exact component={Register} />
-        <Route path='/forgetPassword' exact component={ForgetPassword} />
+        <Route path='/login' exact component={LoginPage} />
+        <Route path='/register' exact component={RegisterPage} />
+        <Route path='/forgetPassword' exact component={ForgetPasswordPage} />
         <Route path='/passwordReset' exact component={ResetPassword} />
         <Route path='/expired' exact component={Expired} />
         <PrivateRoute/>

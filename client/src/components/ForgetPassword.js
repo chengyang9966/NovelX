@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import Checker from "../utils/Checker";
 import Loading from "./Loading";
 import PopUp from "./PopUp";
+import Subtitle from "./SubTitle";
 const ForgetPassword=()=>{
 const [data,setData]=useState({
     email:'',
@@ -77,7 +78,7 @@ const onChange=(name,value)=>{
         <>
         <div >
             {loading&&<Loading/>}
-         <Title/>
+            <Subtitle title='forget password'/>
         <form onSubmit={(data)=>onSubmit(data)}>
   <div className="mb-3 px-4">
     <label for="exampleInputEmail1" className="form-label">Email address</label>

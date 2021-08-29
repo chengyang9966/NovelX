@@ -5,6 +5,9 @@ import { useHistory } from "react-router";
 import Checker from "../utils/Checker";
 import Loading from "./Loading";
 import PopUp from "./PopUp";
+import EyesIcon from "./Eye";
+import { EncrytionObj } from "../utils/encryption";
+import Subtitle from "./SubTitle";
 const Register=()=>{
 const [data,setData]=useState({
     email:'',
@@ -60,14 +63,18 @@ const onSubmit=(e)=>{
             setLoading(false);
             console.log('res: ', res);
             if(res.status===201){
-                localStorage.setItem('user',JSON.stringify(
-                   res.data
-                ))
-                history.push('/home')
-            }else{
+                localStorage.setItem('user',EncrytionObj(res.data))
+                setLoading(false);
                 setAlert({
                     Message:res.data.message,
                     Title:'Register Success',
+                    Error:true,
+                })
+                history.push('/login')
+            }else{
+                setAlert({
+                    Message:res.data.message,
+                    Title:'Register Fail',
                     Error:true
                 })
                 console.error(res.data)
@@ -97,7 +104,7 @@ const onChange=(name,value)=>{
         <>
         <div >
             {loading&&<Loading/>}
-         <Title/>
+            <Subtitle title='register'/>
         <form onSubmit={(data)=>onSubmit(data)}>
         <div className="row mb-3 px-4">
     <div className="col">
@@ -125,9 +132,10 @@ const onChange=(name,value)=>{
   <div className="mb-3 px-4 text-danger " >
       <div>{error.EmailText}</div>
   </div>
-  <div className="mb-3 px-4">
-    <label for="exampleInputPassword1" className="form-label">Password</label>
+    <label for="exampleInputPassword1" className="form-label  px-4">Password</label>
+  <div  style={{width:'100%',justifyContent:'flex-end'}} className="mb-3 px-4 d-flex align-items-center">
     <input type={viewPassword?'text':"password"} name="password" value={data.password} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
+    {EyesIcon(viewPassword,()=>SetviewPassword(!viewPassword),true)}
   </div>
   <div className="mb-3 px-4 text-danger " >
       <div>{error.PasswordText}</div>

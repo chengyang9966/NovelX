@@ -1,7 +1,8 @@
 
 /* font-family: 'Abril Fatface', cursive; */
 :root{
-  --main-red-color:#fc0c00
+  --main-red-color:#fc0c00;
+  --main-grey-color:#d3d3d3;
 }
 body{
   font-family: 'Montserrat', sans-serif;
@@ -14,6 +15,20 @@ z-index: 1;
 .pointer{
   cursor: pointer;
 }
+.loginOuterContainer{
+  background-color: var(--main-grey-color);
+  opacity: 0.8;
+  height: 100vh;
+  
+}
+.loginContainter{
+  width:45%;
+  margin: 0px auto;
+  padding: 40px 0px;
+  border-radius: 10px;
+  background-color: white;
+  min-width: 350px;
+}
 .logout-btn{
   position: fixed;
   bottom: 30px;
@@ -25,7 +40,7 @@ z-index: 1;
 }
 /* Display Layout */
 .Container-Right{
-  min-height: 100vw;
+  min-height: 100vh;
   width: 90%;
   background-color:#f3f5f3 ;
   height: 100%;
@@ -110,7 +125,13 @@ z-index: 1;
 .IconView{
   width: 20px;
   position: absolute;
-  right: 40px;
+  margin-right:10px ;
+  cursor: pointer;
+}
+.IconView1{
+  width: 20px;
+  margin-right:10px ;
+  position: absolute;
   cursor: pointer;
 }
 .avatarLogo{
@@ -163,7 +184,7 @@ button{
 }
 
 .sidebar-nav .nav-link{
-  font-size: 19px;
+  font-size: 15px;
   color: #d3d3d3;;
   cursor: pointer;
   margin-top: 2rem;
@@ -255,4 +276,102 @@ button{
   height: 300px;
   object-fit: contain;
   border: 1px solid black;
+}
+.App {
+  text-align: center;
+  width: 95%;
+  margin: 15px auto;
+}
+
+.container-drag {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin:10px 40px;
+}
+
+.wip {
+  width:200px
+}
+.draggable {
+  width: 200px;
+  height: 80px;
+  background-color: yellow;
+  margin: 5px auto;
+  line-height: 3em;
+  border-radius: 10px;
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.draggable:active{
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  border-radius: 10px;
+}
+.droppable {
+  right: 0;
+  top: 10;
+  width: 200px;
+}
+.header {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: #E0E0E0;
+  width:100%;
+}
+
+.task-header {
+  display: inline-block;
+  width:100%;
+  
+}
+
+.addTasks:hover {
+  background-color: rgba(21, 7, 38, 0.08);
+  color: #151b26;
+  font-weight: bold;
+}
+.addTasks{
+  padding: 5px;
+cursor: pointer;
+}
+
+
+.copyright{
+  position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width: 100%;
+}
+.copyRightText{
+  font-size: 12px;
+  color: #000;
+}
+[contenteditable] {
+  outline: 0px solid transparent;
+  cursor: pointer;
+  width: 100px;
+  height:57px;
+  display: inline-block; /* for inline elements e.g. span, strong, em etc */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.CloseBtnNew{
+  color: black;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  right: -10px;
+  top: -5px;
+  position: absolute;
+  background-color: #d3d3d3;
+  border-radius: 50px;
+
+  border-radius: 1000;
+  border-radius: 100;
 }

@@ -3,17 +3,10 @@ import React, { useState } from "react";
 const Dropdown=(props)=>{
     const [dropDown, SetDropDown] = useState(false); 
     const   handleBlur = (e) => {
+      console.log('gew')
         // firefox onBlur issue workaround
-        if (e.nativeEvent.explicitOriginalTarget &&
-            e.nativeEvent.explicitOriginalTarget === e.nativeEvent.originalTarget) {
-          return;
-        }
+          SetDropDown(false);
     
-        if (this.state.show) {
-          setTimeout(() => {
-            SetDropDown(false);
-          }, 200);
-        }
       }
     return(
         <div className="d-flex justify-content-between mt-5 me-4">
@@ -35,7 +28,7 @@ const Dropdown=(props)=>{
             </div>
        
        {dropDown&&
-  <div  onBlur={(e)=>handleBlur(e)} tabIndex='1' className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  <div  onBlur={()=>console.log('egegg')}  id='profileDropDown' tabIndex={0} className="dropdown-menu" >
   <a className="dropdown-item" href="/Profile">Profile</a>
     <div className="dropdown-divider"></div>
   </div>}

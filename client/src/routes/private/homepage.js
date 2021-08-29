@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import MasterPageLayout from "../../components/masterPage";
-import { CreateToken, CreateHeader } from "../../utils/createToken";
 import Loading from "../../components/Loading";
 import SmallCard from "../../components/SmallCard";
 import Card from "../../components/Card";
@@ -9,9 +7,9 @@ import CardBtn from "../../Types/CardBtnList";
 import { CurrentDateTimeInString } from "../../utils/CheckCurrentDateTime";
 import MyApp from '../../components/PDFView'
 import Datetime from '../../utils/timeDate'
-const HomePage = () => {
-  let userid = JSON.parse(localStorage.getItem("user")).UserId;
-  let config = CreateHeader();
+const HomePage = (props) => {
+  let ACL=props.ACL
+  let contact=props.contact
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setloading] = useState(true);
@@ -20,22 +18,15 @@ const HomePage = () => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    axios.get(`/api/getusercontact/${userid}`, config).then((res) => {
-      let ContactData = res.data[0];
-      if (res.status === 200) {
-        setUserName(ContactData.username);
-        setEmail(ContactData.email);
-        setloading(false);
+        setUserName(contact.username);
+        setEmail(contact.email);
         setTime(CurrentDateTimeInString());
-      } else {
         setloading(false);
-      }
-    });
     setCardDetails({
         ...CardDetails,
         setClose:()=>setcardOpen(false)
     })
-  },[]);
+  },[ACL]);
 
 
   let displayArray = [
@@ -58,7 +49,10 @@ const HomePage = () => {
               </div>
             <div className="d-flex Spacing">
             <div className="formInput50">
-            <SmallCard displayArray={displayArray} AddBtn={true} onClick={()=>console.log('HEWFE')} cardClick={(i)=>{
+            <SmallCard displayArray={displayArray} AddBtn={true} disabled={ACL?ACL.canAddTask:false} onClick={()=>console.log('HEWFE')} cardClick={(i)=>{
+              if(ACL&&!ACL.canViewTask){
+                  return
+              }
                 setCardDetails({
                     ...CardDetails,
                     title:i.title,

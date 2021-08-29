@@ -5,6 +5,7 @@ import HeaderText from "../../components/HeaderText";
 import Loading from "../../components/Loading";
 import {CreateImageHeader,CreateHeader} from '../../utils/createToken';
 import axios from "axios"
+import { DescrytionObj } from "../../utils/encryption";
 const PersonalPage = () => {
   const [cardOpen, setcardOpen] = useState(false);
   const [CardDetails, setCardDetails] = useState(CardBtn);
@@ -12,7 +13,7 @@ const PersonalPage = () => {
   const [data,setdata]=useState(null)
   const [loading,setLoading]=useState(false)
   useEffect(()=>{
-    let user=JSON.parse(localStorage.getItem('user'))
+    let user=DescrytionObj(localStorage.getItem('user'))
     axios.get(`api/images/${user.UserId}`,CreateHeader()).then(res=>{
       setImage(res.data[0].imageurl)
     })
@@ -44,7 +45,7 @@ const uploadImage=(e)=>{
     throw new Error('Select a file first!');
   }
   setLoading(true)
-  let user=JSON.parse(localStorage.getItem('user'))
+  let user=DescrytionObj(localStorage.getItem('user'))
   const formData = new FormData();
       formData.append('file', data[0]);
 axios.post(`/api/upload/image/${user.UserId}`,

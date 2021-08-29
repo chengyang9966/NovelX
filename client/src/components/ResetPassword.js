@@ -6,6 +6,7 @@ import Checker from "../utils/Checker";
 import Loading from "./Loading";
 import PopUp from "./PopUp";
 import EyesIcon from "./Eye";
+import { EncrytionObj } from "../utils/encryption";
 const ResetPassword=()=>{
 const [data,setData]=useState({
     email:'',
@@ -74,9 +75,7 @@ console.log(query.get("token"))
             setLoading(false);
             console.log('res: ', res);
             if(res.status===200){
-                localStorage.setItem('user',JSON.stringify(
-                   res.data
-                ))
+                localStorage.setItem('user',EncrytionObj(res.data))
                 history.push('/home')
             }else{
                 setAlert({
@@ -121,7 +120,7 @@ const onChange=(name,value)=>{
       <div>{error.EmailText}</div>
   </div>
     <label for="exampleInputPassword1" className="mb-3 px-4 form-label">Password</label>
-  <div className="mb-3 px-4 d-flex align-items-center">
+  <div style={{width:'100%',justifyContent:'flex-end'}} className="mb-3 px-4 d-flex align-items-center">
     <input type={view?"text":"password"} name="password" value={data.password} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
   {EyesIcon(view,()=>setView(!view))}
   </div>
@@ -129,7 +128,7 @@ const onChange=(name,value)=>{
       <div>{error.PasswordText}</div>
   </div> 
     <label for="exampleInputPassword1" className="mb-3 px-4  form-label">Confirm Password</label>
-  <div className="mb-3 px-4 d-flex align-items-center">
+  <div style={{width:'100%',justifyContent:'flex-end'}} className="mb-3 px-4 d-flex align-items-center">
     <input type={view?"text":"password"} name="password2" value={data.password2} onChange={e=>onChange(e.target.name,e.target.value)} className="form-control rounded-pill" id="exampleInputPassword1"/>
     {EyesIcon(view2,()=>setView2(!view2))}
   </div>

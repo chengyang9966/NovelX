@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAd,faPlus,faClock,faFolder } from "@fortawesome/free-solid-svg-icons"
-const SmallCard=({title,displayArray,onClick,AddBtn,cardClick})=>{
+const SmallCard=({title,displayArray,onClick,AddBtn,cardClick,disabled})=>{
 return(
 
         <div className="card text-center SmallCardWrapper" >
         <div style={{backgroundColor:'white',fontWeight:'bold',paddingBottom:'0px'}} className="card-body d-flex justify-content-between align-items-center px-5">
     <h5 className="card-title  mt-2 titleText">Hewr</h5>
-    {AddBtn&& <FontAwesomeIcon className='iconClick' onClick={onClick} icon={faPlus}/>}
+    {AddBtn&&disabled&& <FontAwesomeIcon className='iconClick' onClick={onClick} icon={faPlus}/>}
   </div>
   <div className="card-body px-5 SmallCardBodyWrapper">
     {

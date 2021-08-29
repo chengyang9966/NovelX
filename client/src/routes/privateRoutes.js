@@ -4,7 +4,6 @@ import {
   } from "react-router-dom";
 
 const PrivateRoute=({ children,auth, ...rest })=> {
-    console.log('auth: ', auth);
     return (
       <Route
         {...rest}

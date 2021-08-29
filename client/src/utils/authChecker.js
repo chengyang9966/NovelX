@@ -1,7 +1,8 @@
 import axios from 'axios'
 import {CreateToken} from './createToken'
+import { DescrytionObj } from './encryption'
 const  CheckAuth=async()=>{
-        let user=JSON.parse(localStorage.getItem('user'))
+        let user=DescrytionObj(localStorage.getItem('user'))
         let temp =false
         if(user&&Object.keys(user).length>0){
             if(CreateToken()!==''){
