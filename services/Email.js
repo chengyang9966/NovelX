@@ -5,7 +5,7 @@ const { string } = require('pg-format');
 
 
   let mailOptionsDefault = {
-    from:' yang826066@gmail.com',
+    from:'noReply_NovelX@gmail.com',
     to: 'chengyang9966@gmail.com',
     subject: 'Nodemailer Project',
     text: 'Hi from your nodemailer project'
@@ -19,15 +19,17 @@ const { string } = require('pg-format');
           pass:process.env.SMTP_PASSWORD
         }
       });
-
+      console.log('hellooo')
       transporter.sendMail(Object.assign(mailOptionsDefault,mailOptions), function(err, data) {
+        
           if (err) {
             console.log("Error " + err);
           } else {
-              if(callback){
-                callback()
-              }
+            
             console.log("Email sent successfully");
+            if(callback){
+              callback()
+            }
           }
         });
   }

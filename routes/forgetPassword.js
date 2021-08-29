@@ -20,7 +20,6 @@ const ForgetPassword=function(app){
                             text:`Please click on the link to reset password ${link}`
                         },
                         Query('Update users SET resetpassword=true WHERE email=$1',[req.body.email]).then(responeQuery=>{
-                            console.log('responeQuery: ', responeQuery);
                             res.status(200).json({
                                 message:'Reset Email Suceess'
                             })

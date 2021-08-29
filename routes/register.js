@@ -2,7 +2,7 @@ const SignToken=require('../utils/jwtToken').SignToken
 const HashPassword=require('../utils/password').HashPassword
 const Query=require('../db').query;
 const UserModel=require('../models/User')
-
+const {SendEmail}=require('../services/Email')
 const Register=function(app){
   app.post('/api/registerUser',(req,res,next)=>{ 
     let temp=[req.body];
@@ -19,11 +19,21 @@ const Register=function(app){
              const values=UserModel.insert(temp).returning(UserModel.id).toQuery();
              Query(values).then(respones=>{
                console.log('respones: ', respones);
-               res.status(201).json({
-                email:req.body.email,
-                UserId:respones[0],
-                accessToken:SignToken(respones),
-                message:'Created Account Successfully'})
+               let mailOptionsDefault = {
+                from:' yang826066@gmail.com',
+                to: req.body.email,
+                subject: 'NovelX',
+                text: `Welcome ${req.body.fname} to NovelX and thank you for Create a Account with us`
+              };
+               SendEmail(mailOptionsDefault,
+                res.status(201).json({
+                  email:req.body.email,
+                  UserId:respones[0],
+                  accessToken:SignToken(respones),
+                  message:'Created Account Successfully'})
+                
+                )
+              
              })
 
          })
