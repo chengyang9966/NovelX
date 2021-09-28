@@ -26,7 +26,8 @@ const HomePage = (props) => {
         ...CardDetails,
         setClose:()=>setcardOpen(false)
     })
-  },[ACL]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[props.ACL]);
 
 
   let displayArray = [
@@ -67,7 +68,6 @@ const HomePage = (props) => {
             <SmallCard displayArray={displayArray} />
             </div>
             </div>
-            <MyApp/>
           </div>
           {cardOpen&&<Card title={CardDetails.title} description={CardDetails.description} setClose={CardDetails.setClose}  />}
         </MasterPageLayout>

@@ -1,7 +1,0 @@
-{
-	"events": {
-		"restart": "lsof -i :${PORT:-4500} -t | xargs kill",
-		"crash": "lsof -i :${PORT:-4500} -t | xargs kill"
-	 },
-	"delay": "1500"
-}

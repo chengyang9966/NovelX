@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS contact (
   address2 character varying(255) NULL,
   city character varying(50) NULL,
   state character varying(60) NULL,
+  country character varying(100) NULL,
   postcode character varying(10) NULL,
   phonenumber character varying(15) NULL,
   dob date NULL,

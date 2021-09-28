@@ -17,10 +17,11 @@ import axios from "axios";
 import Permission from "../../utils/acl";
 import { DescrytionObj } from "../../utils/encryption";
 const PrivateRouteMain=()=>{    
-let userid = DescrytionObj(localStorage.getItem("user")) ?DescrytionObj(localStorage.getItem("user")) .UserId:'';
+let userid = DescrytionObj(localStorage.getItem("user")) ?DescrytionObj(localStorage.getItem("user")).UserId:'';
 let config = CreateHeader();
-let PermissionKey={};
+
     const [status,SetStatus]=useState(false)
+    const [PermissionKey,SetPermissionKey]=useState({})
     const [data,SetData]=useState(false)
     const [ContactDetails,SetContactDetails]=useState(false)
 useEffect(() => {
@@ -42,7 +43,7 @@ useEffect(()=>{
         let ContactData = res.data[0];
         if (res.status === 200) {
             SetContactDetails(ContactData)
-          Permission(ContactData.rolename,(data)=>PermissionKey=data);
+          Permission(ContactData.rolename,(data)=>SetPermissionKey(data));
           SetStatus(true);
         } else {
             SetStatus(true);
@@ -50,7 +51,6 @@ useEffect(()=>{
     });
 },[])
 
-console.log('PermissionKey: ', PermissionKey);
 
     return(
         <>

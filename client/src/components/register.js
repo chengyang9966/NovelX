@@ -37,7 +37,7 @@ const [viewPassword,SetviewPassword]=useState(false)
 const history=useHistory()
 
 useEffect(()=>{
-    axios.get('./api/getRoles').then(res=>{
+    axios.get('/api/getRoles').then(res=>{
         SetRoles(res.data)
     })
 },[])

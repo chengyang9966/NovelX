@@ -8,10 +8,10 @@ const ROLES = {
   USER: "User",
   ADMIN: "Admin",
   GUEST: "Guest",
+  MANAGER:'manager'
 };
 
 const Permission = (role,cb) => {
-  console.log('role: ', role);
   InitialState["permissions"] = {
     home: {
       canViewTask: role !== ROLES.GUEST,
@@ -21,7 +21,7 @@ const Permission = (role,cb) => {
     // Add more permissions as you like
   };
   if(cb){
-    cb(InitialState)
+    cb(InitialState.permissions)
   }
   localStorage.setItem("Permission", EncrytionObj(InitialState));
 };

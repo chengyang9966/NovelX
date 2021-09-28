@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "crypto-js": "^4.1.1",
+    "http-proxy-middleware": "^2.0.1",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -40,6 +41,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build && echo '/* /index.html 200' | cat >build/_redirects",
     "dev": "PORT=4800 react-scripts start",
+    "dev_win": "set PORT=4800 && react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -32,9 +32,9 @@ const DatePickerComponent=({value,onChange,todayBtn})=>{
         );
       };
       const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <div className=" d-flex align-items-center justify-content-between" onBlur={onClick}>
+        <div className=" d-flex align-items-center justify-content-between" style={{position:'relative'}} onBlur={onClick}>
           <input className="form-control rounded-pill" value={value}  onClick={onClick} onChange={(e) => onChange(e.target.value)}  ref={ref}/>
-          <FontAwesomeIcon icon={faCalendarDay} className="IconView"   onClick={onClick} ref={ref}/>
+          <FontAwesomeIcon icon={faCalendarDay} className="IconView"style={{position:'absolute',right:5}}   onClick={onClick} ref={ref}/>
         </div>
         // <button className="form-control rounded-pill d-flex align-items-center justify-content-between" onClick={onClick} ref={ref}>
         //   {value}

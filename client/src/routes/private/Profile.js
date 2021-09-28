@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios"
-import { useHistory } from "react-router";
 import moment from "moment";
 import Checker from "../../utils/Checker";
 import Loading from "../../components/Loading";
@@ -31,7 +30,7 @@ const ProfilePage=()=>{
         postcode:'',
         country:'Malaysia',
         dob:new Date(),
-        username:''
+
     })
     const ErrorData={
         EmailText:'',
@@ -81,12 +80,11 @@ const ProfilePage=()=>{
                     rolename:ContactData.rolename,
                     address1:ContactData.address1,
                     address2:ContactData.address2,
-                    username:ContactData.username,
                     city:ContactData.city,
                     country:ContactData.country,
                     state:ContactData.state,
                     postcode:ContactData.postcode,
-                    dob: moment(ContactData.dob).toDate(),
+                    dob:ContactData.dob? moment(ContactData.dob).toDate():new Date(),
                     phonenumber:ContactData.phonenumber,
                 })
 
@@ -100,7 +98,7 @@ const ProfilePage=()=>{
     const onSubmit=(e)=>{
         setLoading(true);
         e.preventDefault();
-        let Newdata=data 
+        let Newdata={...data,userid:userid} 
         if(data.password===''){
           delete Newdata.password
         }
@@ -112,6 +110,7 @@ const ProfilePage=()=>{
                 SetError(ErrorData)
             },3000)
         }else{
+
           axios.post(`/api/updateusercontact/${userid}`,Newdata,config).then(res=>{
             setLoading(false)
             SetcardTextForTitle({

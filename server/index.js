@@ -11,16 +11,17 @@ const auth=require('./utils/jwtToken').Auth;
 const {Route}=require('./routes')
 
 app.use(cors());
-app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 app.use(formData.union());
-app.use(Route()) 
-db().then(
-  Query(`SELECT * FROM users`).then(res=>{
-    console.log('res: ', res);
+app.use(Route()); 
+db();
+// db().then(
+//   Query(`SELECT * FROM users`).then(res=>{
+//     console.log('res: ', res);
   
-  })
-);
+//   })
+// );
 
 
 app.post("/api/auth",auth,(req,res)=>{

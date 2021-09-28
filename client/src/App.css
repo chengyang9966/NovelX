@@ -375,3 +375,49 @@ cursor: pointer;
   border-radius: 1000;
   border-radius: 100;
 }
+
+/* pdf */
+
+.pdf-container{
+  position: relative;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 2px;
+  cursor: pointer;
+}
+.arrowBtn{
+  background-color: white;
+  border: none;
+  border-radius: 4px;
+}
+.arrowBtn:hover{
+  background-color: var(--main-grey-color);
+}
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.page-control{
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  background: white;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity ease-in-out 0.2s;
+  box-shadow: 0 30px 40px 0 rgba(16, 36, 94, 0.2);
+  border-radius: 4px;
+}
+.pdf-container:hover .page-control{
+ opacity: 1;
+}
