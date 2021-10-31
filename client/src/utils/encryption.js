@@ -1,20 +1,42 @@
+import SecureStorage from "secure-web-storage";
 import CryptoJS from "crypto-js";
+let SECRET_KEY = "my secret key";
 
+let secureStorage = new SecureStorage(localStorage, {
+  hash: function hash(key) {
+    key = CryptoJS.SHA256(key, SECRET_KEY);
 
-const EncrytionObj=(data)=>{
-    if(data){
-       let temp= CryptoJS.AES.encrypt(JSON.stringify(data), 'secret key 123').toString();
-       console.log('temp: ', temp);
-        return  JSON.stringify(data)
-    }
+    return key.toString();
+  },
+  encrypt: function encrypt(data) {
+    data = CryptoJS.AES.encrypt(data, SECRET_KEY);
 
-}
+    data = data.toString();
 
-const DescrytionObj=(data)=>{
-    if(data){
+    return data;
+  },
+  decrypt: function decrypt(data) {
+    data = CryptoJS.AES.decrypt(data, SECRET_KEY);
 
-        return JSON.parse(data)
-    }
-}
+    data = data.toString(CryptoJS.enc.Utf8);
 
-export {EncrytionObj,DescrytionObj}
+    return data;
+  },
+});
+
+const EncrytionObj = (data, key) => {
+  if (data && key) {
+    secureStorage.setItem(key, data);
+  }
+};
+
+const DescrytionObj = (key) => {
+  if (key) {
+    return secureStorage.getItem(key);
+  }
+};
+const removeObj = () => {
+  secureStorage.clear();
+};
+
+export { EncrytionObj, DescrytionObj, removeObj };

@@ -5,8 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import { ColorPlatter } from "../../components/ColorPlatter";
 import closeBtn from "../../components/closeBtn";
+import { SketchPicker } from 'react-color';
+import Toast from "../../components/toast";
+import { TYPE } from "../../Types/Type";
 const Drag = (props) => {
   const [loading, setLoading] = useState(false);
+  const [taost, setToast] = useState(false);
 
   const [tasks,SetTasks] = useState([
       { id:1,name: "Learn Angular", category: "wip", bgcolor: "yellow" },
@@ -19,21 +23,24 @@ const Drag = (props) => {
 }
 const OpenColor=(text,id)=>{
  return(
-<ColorPlatter/>
+   <div style={{position:'absolute',backgroundColor:'blue'}}>
+<SketchPicker/>
+   </div>
  )  
 }
 const onDragOver = (ev) => {
     ev.preventDefault();
+    console.log('hiii')
+    setToast(true);
 }
 const AddTask=(e,name)=>{
-    let temp=[...tasks,{
-      id:tasks.length,
+
+    SetTasks(prev =>[...prev,{
+      id:tasks.length+1,
       name:'',
       category:name,
       bgcolor:'white'
-  }]
-
-    SetTasks(temp)
+    }])
     
 }
 
@@ -64,22 +71,9 @@ const AddTask=(e,name)=>{
 
   }
   const deleteItem=(id)=>{
-    console.log('id: ', id);
-    let pos = tasks.findIndex((object) => {return (object.id === id)})
-    let NewArray= tasks
-    console.log('pos: ', pos);
-    if(pos){
-     delete NewArray[pos]
-      NewArray=NewArray.filter(w=>w!==undefined)
-      console.log('NewArray: ', NewArray);
-  
-      SetTasks(NewArray)
-    }
-    if(pos===0){
-      delete NewArray[pos]
-      NewArray=NewArray.filter(w=>w!==undefined)
-      SetTasks(NewArray)
-    }
+  console.log("🚀 ~ file: Drag.js ~ line 66 ~ deleteItem ~ id", id,tasks)
+    let result=  tasks.filter(w=>w.id!==id)
+    SetTasks(result)
 
   }
   const swap = (title1, title2) => {
@@ -112,7 +106,7 @@ tasks.forEach ((t,index) => {
           <span contentEditable='true' onInput={e => ChangeText(e.currentTarget.textContent,t.id)}>
             {t.name}
           </span>
-          <FontAwesomeIcon style={{zIndex:1000000,cursor:'pointer'}} onClick={OpenColor} icon={faPalette} title='Change Color'/>
+          <FontAwesomeIcon style={{zIndex:1000000,cursor:'pointer'}} onClick={()=>OpenColor()} icon={faPalette} title='Change Color'/>
         </div>
         </div>
         {t.category!=='complete'&&
@@ -124,7 +118,7 @@ tasks.forEach ((t,index) => {
   return (
     <>
       <HeaderText profile={(e) => console.log(e)}>
-    
+      <Toast showToast={taost} clostToast={()=>setToast(false)}  timer="6000" type={TYPE.WARNING}/>
 
         {
             <>

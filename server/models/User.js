@@ -9,6 +9,7 @@
       'lname',
       'email',
       'password',
+      'isLogIn',
       {name:'roleid',notNull:true}
     ]
   })

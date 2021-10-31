@@ -75,7 +75,7 @@ console.log(query.get("token"))
             setLoading(false);
             console.log('res: ', res);
             if(res.status===200){
-                localStorage.setItem('user',EncrytionObj(res.data))
+                EncrytionObj(res.data,"user")
                 history.push('/home')
             }else{
                 setAlert({

@@ -1,5 +1,7 @@
+import { DescrytionObj } from "./encryption"
+
 const CreateToken=()=>{
-    const user =JSON.parse(localStorage.getItem('user'))
+    const user =DescrytionObj('user')
     if(user){
         return  user.accessToken? user.accessToken:''
         

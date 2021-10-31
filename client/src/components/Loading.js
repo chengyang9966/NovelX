@@ -5,7 +5,7 @@ const Loading=()=>{
         <span className="visually-hidden">Loading...</span>
       </div>
       <div style={{position:'absolute'}}>
-          <img src="/NovelX.png" width="70rem" height="70rem"/>
+          <img src="/NovelX.png" width="70rem" height="70rem" alt='logo'/>
       </div>
         </div>
     )

@@ -13,7 +13,7 @@ export const ColorPlatter= ()=>{
     return(
         <div>
             {
-                Color.map(w=>{
+                Color.map(w=>{  
                     return(
                         <div style={{borderRadius:'100',width:'20px',height:'20px'}}>
                             {w.code}

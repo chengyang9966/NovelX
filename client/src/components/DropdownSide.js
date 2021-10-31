@@ -23,6 +23,7 @@ const Dropdown=(props)=>{
               width={40}
               height={40}
               className="avatarLogo mx-4"
+              alt='Avatar'
               
             />
             </div>

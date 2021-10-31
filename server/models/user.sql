@@ -4,6 +4,7 @@ create table users(
 	lname VARCHAR (25) not null,
 	email VARCHAR(100) not null,
 	password  VARCHAR (25) not null,
+	 isLogIn boolean not null default false;
 	roleId INT NOT NULL,
 	FOREIGN KEY (roleId)
       REFERENCES roles (id)

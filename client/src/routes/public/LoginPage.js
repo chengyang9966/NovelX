@@ -1,7 +1,7 @@
 import Title from "../../components/Title"
 import Login from "../../components/login"
 import CopyRight from "../../components/CopyRight"
-export default (params) => {
+const loginPage= (params) => {
     return(
         <div className='loginOuterContainer'> 
         <Title/>   
@@ -12,3 +12,4 @@ export default (params) => {
         </div>
     )
 }
+export default loginPage

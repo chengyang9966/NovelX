@@ -3,78 +3,98 @@ import Card from "../../components/Card";
 import CardBtn from "../../Types/CardBtnList";
 import HeaderText from "../../components/HeaderText";
 import Loading from "../../components/Loading";
-import {CreateImageHeader,CreateHeader} from '../../utils/createToken';
-import axios from "axios"
+import { CreateImageHeader, CreateHeader } from "../../utils/createToken";
+import axios from "axios";
 import { DescrytionObj } from "../../utils/encryption";
 const PersonalPage = () => {
   const [cardOpen, setcardOpen] = useState(false);
   const [CardDetails, setCardDetails] = useState(CardBtn);
-  const [Image,setImage]=useState(null)
-  const [data,setdata]=useState(null)
-  const [loading,setLoading]=useState(false)
-  useEffect(()=>{
-    let user=DescrytionObj(localStorage.getItem('user'))
-    axios.get(`api/images/${user.UserId}`,CreateHeader()).then(res=>{
-      setImage(res.data[0].imageurl)
-    })
-  },[])
-  let config=CreateImageHeader()
+  const [Image, setImage] = useState(null);
+  const [data, setdata] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let user = DescrytionObj("user");
+    axios
+      .get(`api/images/${user.UserId}`, CreateHeader())
+      .then((res) => {
+        setImage(res.data[0].imageurl);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  }, []);
+  let config = CreateImageHeader();
   useEffect(() => {
     setCardDetails({
       ...CardDetails,
       setClose: () => setcardOpen(false),
     });
-  },[]);
-  const LoadImage=(event)=>{
-      if(event.target.files.length===0){
-          return
-        }
-        setdata(event.target.files)
-    let valueName= event.target.files[0].name;
+  }, []);
+  const LoadImage = (event) => {
+    if (event.target.files.length === 0) {
+      return;
+    }
+    setdata(event.target.files);
+    let valueName = event.target.files[0].name;
 
     var reader = new FileReader();
-    reader.onload = function(){
+    reader.onload = function () {
       setImage(reader.result);
     };
-   reader.readAsDataURL(event.target.files[0]);
-
-}
-const uploadImage=(e)=>{
-  e.preventDefault();
-  if (!data) {
-    throw new Error('Select a file first!');
-  }
-  setLoading(true)
-  let user=DescrytionObj(localStorage.getItem('user'))
-  const formData = new FormData();
-      formData.append('file', data[0]);
-axios.post(`/api/upload/image/${user.UserId}`,
-formData
-,config).then(res=>{
-  setLoading(false)
-  console.log(res)
-}).catch(err=>{
-  setLoading(false)
-  console.log(err)
-})
-}
+    reader.readAsDataURL(event.target.files[0]);
+  };
+  const uploadImage = (e) => {
+    e.preventDefault();
+    if (!data) {
+      throw new Error("Select a file first!");
+    }
+    setLoading(true);
+    let user = DescrytionObj("user");
+    const formData = new FormData();
+    formData.append("file", data[0]);
+    axios
+      .post(`/api/upload/image/${user.UserId}`, formData, config)
+      .then((res) => {
+        setLoading(false);
+        console.log(res);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
   return (
     <>
-      <HeaderText >
+      <HeaderText>
         <div className="mb-3">
           <form onSubmit={uploadImage}>
-          <label for="formFile" className="form-label">
-            Upload Avatar
-          </label>
-          <input className="form-control" type="file" id="formFile" accept="image/*"   onChange={(e)=>LoadImage(e)} />
-        {Image&&
-        <div style={{marginTop:'10px'}}>
-        <img className="ImagePreview" src={Image}/>
-        </div>
-        }
-         <button type="submit" className="btn btn-primary rounded-pill">Submit</button>
+            <label for="formFile" className="form-label">
+              Upload Avatar
+            </label>
+            <input
+              className="form-control"
+              type="file"
+              id="formFile"
+              accept="image/*"
+              onChange={(e) => LoadImage(e)}
+            />
+            {Image && (
+              <div style={{ marginTop: "10px" }}>
+                <img
+                  className="ImagePreview"
+                  src={Image}
+                  width={40}
+                  height={40}
+                  alt="profile"
+                />
+              </div>
+            )}
+            <button type="submit" className="btn btn-primary rounded-pill">
+              Submit
+            </button>
           </form>
-
         </div>
       </HeaderText>
       {cardOpen && (
@@ -85,7 +105,7 @@ formData
         />
       )}
 
-      {loading&&<Loading/>}
+      {loading && <Loading />}
     </>
   );
 };
