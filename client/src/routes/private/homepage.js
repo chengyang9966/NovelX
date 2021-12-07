@@ -55,10 +55,6 @@ const HomePage = (props) => {
                   disabled={ACL ? ACL.canaddtask : false}
                   onClick={() => console.log("HEWFE")}
                   cardClick={(i) => {
-                    console.log(
-                      "🚀 ~ file: homepage.js ~ line 58 ~ HomePage ~ i",
-                      i
-                    );
                     if (ACL && !ACL.canviewtask) {
                       return;
                     } else {
@@ -85,8 +81,8 @@ const HomePage = (props) => {
               title={CardDetails.title}
               description={CardDetails.description}
               setClose={CardDetails.setClose}
-              cancelButton
-              okButton
+              // cancelButton
+              // okButton
             />
           )}
         </MasterPageLayout>
