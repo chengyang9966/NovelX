@@ -1,9 +1,9 @@
 // const mongoose = require("mongoose");
-const { Client } = require("pg");
-const update = require("./utils/update").update;
-const insert = require("./utils/update").insert;
-const insertMultiple = require("./utils/update").insertMultiple;
-const Utils = require("./utils/update").Utils;
+const { Client } = require('pg');
+const update = require('./utils/update').update;
+const insert = require('./utils/update').insert;
+const insertMultiple = require('./utils/update').insertMultiple;
+const Utils = require('./utils/update').Utils;
 async function connection() {
   try {
     const client = new Client({
@@ -12,20 +12,20 @@ async function connection() {
       password: process.env.HEROKU_POSTGRESQL_PASSWORD,
       port: process.env.HEROKU_POSTGRESQL_PORT,
       database: process.env.HEROKU_POSTGRESQL_DATABASE,
-      ssl: { rejectUnauthorized: false },
+      ssl: { rejectUnauthorized: false }
     });
 
     client.connect((err) => {
       if (err) {
-        console.log("err: ", err);
-        console.log("Could not Connect to Database");
+        console.log('err: ', err);
+        console.log('Could not Connect to Database');
       } else {
-        console.log("Connected to Database");
+        console.log('Connected to Database');
       }
     });
   } catch (error) {
     console.log(error);
-    console.log("Could not Connect to Database");
+    console.log('Could not Connect to Database');
   }
 }
 async function query(query, params) {
@@ -35,7 +35,7 @@ async function query(query, params) {
     password: process.env.HEROKU_POSTGRESQL_PASSWORD,
     port: process.env.HEROKU_POSTGRESQL_PORT,
     database: process.env.HEROKU_POSTGRESQL_DATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   });
   await client.connect();
 
@@ -43,7 +43,7 @@ async function query(query, params) {
   if (rows) {
     return rows;
   } else {
-    return "error in query";
+    return 'error in query';
   }
 }
 /**
@@ -60,27 +60,27 @@ const updateOne = async (
   CheckExists,
   CheckExistsValue
 ) => {
-  console.log("CheckExists,CheckExistsValue: ", CheckExists, CheckExistsValue);
-  if (!entity) throw new Error("no entity table specified");
-  if (Utils.isObjEmpty(conditions)) throw new Error("no conditions specified");
+  console.log('CheckExists,CheckExistsValue: ', CheckExists, CheckExistsValue);
+  if (!entity) throw new Error('no entity table specified');
+  if (Utils.isObjEmpty(conditions)) throw new Error('no conditions specified');
 
   let resp;
   const { text, values } = update(entity, conditions, fields);
   let InsertText = insert(entity, fields).text;
-  console.log("InsertText: ", InsertText);
+  console.log('InsertText: ', InsertText);
   const client = new Client({
     host: process.env.HEROKU_POSTGRESQL_HOST,
     user: process.env.HEROKU_POSTGRESQL_USER,
     password: process.env.HEROKU_POSTGRESQL_PASSWORD,
     port: process.env.HEROKU_POSTGRESQL_PORT,
     database: process.env.HEROKU_POSTGRESQL_DATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   });
   await client.connect();
   try {
     if (CheckExists && CheckExistsValue) {
       let temp = await client.query(CheckExists, CheckExistsValue);
-      console.log("temp: ", temp);
+      console.log('temp: ', temp);
 
       if (temp.rowCount > 0) {
         rs = await client.query(text, values);
@@ -111,7 +111,7 @@ async function insertRow(table, params) {
     password: process.env.HEROKU_POSTGRESQL_PASSWORD,
     port: process.env.HEROKU_POSTGRESQL_PORT,
     database: process.env.HEROKU_POSTGRESQL_DATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   });
   await client.connect();
 
@@ -119,7 +119,7 @@ async function insertRow(table, params) {
   if (rows) {
     return rows;
   } else {
-    return "error in query";
+    return 'error in query';
   }
 }
 async function insertMultipleRow(table, params = []) {
@@ -131,7 +131,7 @@ async function insertMultipleRow(table, params = []) {
     password: process.env.HEROKU_POSTGRESQL_PASSWORD,
     port: process.env.HEROKU_POSTGRESQL_PORT,
     database: process.env.HEROKU_POSTGRESQL_DATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   });
   await client.connect();
 
@@ -139,7 +139,7 @@ async function insertMultipleRow(table, params = []) {
   if (rows) {
     return rows;
   } else {
-    return "error in query";
+    return 'error in query';
   }
 }
 module.exports = {
@@ -149,7 +149,7 @@ module.exports = {
   CloseNetwork,
   updateOne,
   insertRow,
-  insertMultipleRow,
+  insertMultipleRow
 };
 async function CreateTable(text, param) {
   const client = new Client({
@@ -158,17 +158,17 @@ async function CreateTable(text, param) {
     password: process.env.HEROKU_POSTGRESQL_PASSWORD,
     port: process.env.HEROKU_POSTGRESQL_PORT,
     database: process.env.HEROKU_POSTGRESQL_DATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   });
   await client.connect();
 
   client.query(text, param, (err, res) => {
     if (err) throw err;
-    console.log("Create Table Successfully ");
+    console.log('Create Table Successfully ');
     client.end((err) => {
-      console.log("client has disconnected");
+      console.log('client has disconnected');
       if (err) {
-        console.log("error during disconnection", err.stack);
+        console.log('error during disconnection', err.stack);
       }
     });
   });
@@ -180,13 +180,13 @@ async function CloseNetwork(data) {
     password: process.env.HEROKU_POSTGRESQL_PASSWORD,
     port: process.env.HEROKU_POSTGRESQL_PORT,
     database: process.env.HEROKU_POSTGRESQL_DATABASE,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false }
   });
   client.end((err) => {
-    console.log("client has disconnected");
+    console.log('client has disconnected');
     console.log(data);
     if (err) {
-      console.log("error during disconnection", err.stack);
+      console.log('error during disconnection', err.stack);
     }
   });
 }
@@ -196,7 +196,7 @@ function Inserts(template, data) {
   }
   this._rawDBType = true;
   this.formatDBType = function () {
-    return data.map((d) => "(" + pgp.as.format(template, d) + ")").join(",");
+    return data.map((d) => '(' + pgp.as.format(template, d) + ')').join(',');
   };
 }
 
