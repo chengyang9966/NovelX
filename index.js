@@ -21,20 +21,21 @@ app.use(Route());
 Yearly(() => Holiday(app));
 db();
 
-// db().then(
-//   Query(`SELECT * FROM users`).then(res=>{
-//     console.log('res: ', res);
-
-//   })
-// );
-
 app.post('/api/auth', auth, (req, res) => {
   res.status(201).json({
     message: 'user Authorize',
     token: req.token
   });
 });
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
 
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+}
 app.listen(process.env.PORT || 4500, () =>
   console.log(`App listen at ${4500}`)
 );
