@@ -44,10 +44,10 @@
   "scripts": {
     "dev": "PORT=4800 react-scripts start",
     "dev_win": "set PORT=4800 && react-app-rewired start",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
